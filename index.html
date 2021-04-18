@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="backdrop"></div>
+    <header class="heading">
+    <h1>Library Application</h1>
+    <button class="form-btn" id="new-book-btn">New Book</button>
+    </header>
+    <main class="form-container">
+      <button type="button" class="close" id="close">
+        <span>&times;</span>
+      </button>
+      <form id="form" class="form">
+        <h2>Add Book</h2>
+        <div class="form-control">
+          <label for="title">Title:</label>
+          <input type="text" id="title" placeholder="title">
+        </div>
+        <div class="form-control">
+          <label for="author">Author:</label>
+          <input type="text" id="author" placeholder="author">
+        </div>
+        <div class="form-control">
+          <label for="pages">Number of pages:</label>
+          <input type="number" id="pages" placeholder="number of pages">
+        </div>
+        <div class="form-control read-toggle">
+          <span class="read-book">Read the book?</span>
+          <label class="switch">
+            <input type="checkbox" id="read" value="No">
+            <span class="slider round"></span>
+          </label>
+        </div>
+        
+        <button type="submit" class="form-btn btn-add-book" id="add-book-btn">Add Book</button>
+      </form>
+    </main>
+    <div class="card" id="card">
+    </div>
+   <script src="script.js"></script>
+</body>
+</html>
