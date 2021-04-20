@@ -11,13 +11,10 @@ const read = document.getElementById('read');
 const myLibrary = [];
 let book;
 
-// Book constructor
-function Book(title, author, pages, read) {
-  this.title = title;
-  this.author = author;
-  this.pages = pages;
-  this.read = read;
-}
+// Book Factory Function
+const Book = (title, author, pages, read) => {
+  return { title, author, pages, read };
+};
 
 // Add book to library
 function addBookToLibrary(inputArr) {
