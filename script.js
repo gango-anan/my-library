@@ -23,9 +23,13 @@ function createBook() {
 }
 
 // Add book to library
-function addBookToLibrary(inputArr) {
-  myLibrary.push(inputArr);
-}
+const bookOperations = ( () => {
+  const addBookToLibrary = (inputArr) => {
+    myLibrary.push(inputArr);
+  }
+
+  return { addBookToLibrary };
+})();
 
 // Display single book
 function displayBook(newBook) {
@@ -91,7 +95,8 @@ read.addEventListener('click', () => {
 
 form.addEventListener('submit', (e) => {
   e.preventDefault();
-  addBookToLibrary(createBook());
+  //addBookToLibrary(createBook());
+  bookOperations.addBookToLibrary(createBook());
   clearForm();
   formContainer.classList.remove('visible');
   backDrop.classList.remove('display');
