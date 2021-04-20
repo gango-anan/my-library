@@ -204,10 +204,6 @@ input:checked + .slider::before {
   visibility: hidden;
 }
 
-.card.visible {
-  visibility: visible;
-}
-
 .bkcontainer {
   background-color: #fff;
   margin-left: 16px;

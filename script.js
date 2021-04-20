@@ -64,6 +64,12 @@ function displayBooks(library) {
   });
 }
 
+// Clear Form
+function clearForm() {
+  form.reset();
+  read.setAttribute('value', 'No');
+}
+
 // Event Listeners
 newBookBtn.addEventListener('click', () => {
   formContainer.classList.add('visible');
@@ -86,11 +92,11 @@ read.addEventListener('click', () => {
 form.addEventListener('submit', (e) => {
   e.preventDefault();
   addBookToLibrary(createBook());
-  form.reset();
-  read.setAttribute('value', 'No');
+  clearForm();
   formContainer.classList.remove('visible');
   backDrop.classList.remove('display');
-  card.classList.add('visible');
+  card.classList.remove('not-visible');
+  console.log(card);
   displayBooks(myLibrary);
 });
 
