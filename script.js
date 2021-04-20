@@ -16,6 +16,12 @@ const Book = (title, author, pages, read) => {
   return { title, author, pages, read };
 };
 
+//Create Book function
+function createBook() {
+  const book = Book(title.value, author.value, pages.value, read.value);
+  return book;
+}
+
 // Add book to library
 function addBookToLibrary(inputArr) {
   myLibrary.push(inputArr);
@@ -79,8 +85,7 @@ read.addEventListener('click', () => {
 
 form.addEventListener('submit', (e) => {
   e.preventDefault();
-  book = new Book(title.value, author.value, pages.value, read.value);
-  addBookToLibrary(book);
+  addBookToLibrary(createBook());
   form.reset();
   read.setAttribute('value', 'No');
   formContainer.classList.remove('visible');
