@@ -11,54 +11,69 @@ const read = document.getElementById('read');
 const myLibrary = [];
 let book;
 
-// Book constructor
-function Book(title, author, pages, read) {
-  this.title = title;
-  this.author = author;
-  this.pages = pages;
-  this.read = read;
-}
+// Book Factory Function
+const Book = (title, author, pages, read) => {
+  return { title, author, pages, read };
+};
 
-// Add book to library
-function addBookToLibrary(inputArr) {
-  myLibrary.push(inputArr);
-}
-
-// Display single book
-function displayBook(newBook) {
-  const bookContainer = card.appendChild(document.createElement('div'));
-  bookContainer.setAttribute('class', 'bkcontainer');
-  Object.entries(newBook).forEach((book) => {
-    let newElem;
-    const [key, value] = book;
-
-    if (key === 'read') {
-      newElem = bookContainer.appendChild(document.createElement('button'));
-      newElem.setAttribute('class', 'toggleBtn');
-      newElem.setAttribute('data-status', `${myLibrary.indexOf(newBook)}`);
-      if (value === 'No') { newElem.classList.add('status-color'); } else { newElem.classList.remove('status-color'); }
-    } else {
-      newElem = bookContainer.appendChild(document.createElement('p'));
-    }
-
-    newElem.appendChild(document.createTextNode(`${key} : ${value}`));
-  });
-
-  const removeBtn = bookContainer.appendChild(document.createElement('button'));
-  removeBtn.appendChild(document.createTextNode('Remove Book'));
-  removeBtn.setAttribute('class', 'removeBtn');
-  removeBtn.setAttribute('data-index', `${myLibrary.indexOf(newBook)}`);
-}
-
-// Display all books
-function displayBooks(library) {
-  while (card.childNodes.length) {
-    card.removeChild(card.lastChild);
+// Book Operations Module
+const bookOperations = ( () => {
+  const createBook = () => {
+    //const book = Book(title.value, author.value, pages.value, read.value);
+    return Book(title.value, author.value, pages.value, read.value);
+    //return book;
   }
 
-  library.forEach((book) => {
-    displayBook(book);
-  });
+  const addBookToLibrary = (inputArr) => {
+    myLibrary.push(inputArr);
+  }
+
+  const displayBook = (newBook) => {
+    const bookContainer = card.appendChild(document.createElement('div'));
+    bookContainer.setAttribute('class', 'bkcontainer');
+    Object.entries(newBook).forEach((book) => {
+      let newElem;
+      const [key, value] = book;
+  
+      if (key === 'read') {
+        newElem = bookContainer.appendChild(document.createElement('button'));
+        newElem.setAttribute('class', 'toggleBtn');
+        newElem.setAttribute('data-status', `${myLibrary.indexOf(newBook)}`);
+        if (value === 'No') { newElem.classList.add('status-color'); } else { newElem.classList.remove('status-color'); }
+      } else {
+        newElem = bookContainer.appendChild(document.createElement('p'));
+      }
+  
+      newElem.appendChild(document.createTextNode(`${key} : ${value}`));
+    });
+  
+    const removeBtn = bookContainer.appendChild(document.createElement('button'));
+    removeBtn.appendChild(document.createTextNode('Remove Book'));
+    removeBtn.setAttribute('class', 'removeBtn');
+    removeBtn.setAttribute('data-index', `${myLibrary.indexOf(newBook)}`);
+  }
+
+  const displayBooks = (library) => {
+    while (card.childNodes.length) {
+      card.removeChild(card.lastChild);
+    }
+  
+    library.forEach((book) => {
+      displayBook(book);
+    });
+  }
+
+  const deleteBook = (index) => {
+    myLibrary.splice(index, 1);
+  }
+
+  return { createBook, addBookToLibrary, displayBooks, deleteBook };
+})();
+
+// Clear Form
+function clearForm() {
+  form.reset();
+  read.setAttribute('value', 'No');
 }
 
 // Event Listeners
@@ -82,31 +97,32 @@ read.addEventListener('click', () => {
 
 form.addEventListener('submit', (e) => {
   e.preventDefault();
-  book = new Book(title.value, author.value, pages.value, read.value);
-  addBookToLibrary(book);
-  form.reset();
-  read.setAttribute('value', 'No');
+  bookOperations.addBookToLibrary(bookOperations.createBook());
+  clearForm();
   formContainer.classList.remove('visible');
   backDrop.classList.remove('display');
-  card.classList.add('visible');
-  displayBooks(myLibrary);
+  card.classList.remove('not-visible');
+  console.log(card);
+  bookOperations.displayBooks(myLibrary);
 });
 
 card.addEventListener('click', (e) => {
   if (e.target && e.target.matches('button.removeBtn')) {
     // Remove a book
     const index = parseInt(e.target.getAttribute('data-index'), 10);
-    myLibrary.splice(index, 1);
-    displayBooks(myLibrary);
+    bookOperations.deleteBook(index);
+    e.target.parentNode.remove();
   } else if (e.target && e.target.matches('button.toggleBtn')) {
     // Toggle the read status
     const statusIndex = parseInt(e.target.getAttribute('data-status'), 10);
     if (myLibrary[statusIndex].read === 'Yes') {
       myLibrary[statusIndex].read = 'No';
+      e.target.innerHTML = 'read : No';
+      e.target.classList.add('status-color');
     } else {
       myLibrary[statusIndex].read = 'Yes';
+      e.target.innerHTML = 'read : Yes';
+      e.target.classList.remove('status-color');
     }
-
-    displayBooks(myLibrary);
   }
 });
