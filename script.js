@@ -85,8 +85,7 @@ newBookBtn.addEventListener('click', () => {
 });
 
 closeBtn.addEventListener('click', () => {
-  form.reset();
-  read.setAttribute('value', 'No');
+  clearForm();
   formContainer.classList.remove('visible');
   backDrop.classList.remove('display');
 });
@@ -102,7 +101,6 @@ form.addEventListener('submit', (e) => {
   formContainer.classList.remove('visible');
   backDrop.classList.remove('display');
   card.classList.remove('not-visible');
-  console.log(card);
   bookOperations.displayBooks(myLibrary);
 });
 
