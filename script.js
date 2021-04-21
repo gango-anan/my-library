@@ -12,16 +12,20 @@ const myLibrary = [];
 let book;
 
 // Book Factory Function
-const Book = (title, author, pages, read) => {
-  return { title, author, pages, read };
-};
+class Book {
+  constructor(title, author, pages, read) {
+  this.title = title;
+  this.author = author;
+  this.pages = pages;
+  this.read = read;
+  }
+}
 
 // Book Operations Module
 const bookOperations = ( () => {
   const createBook = () => {
-    //const book = Book(title.value, author.value, pages.value, read.value);
-    return Book(title.value, author.value, pages.value, read.value);
-    //return book;
+    book = new Book(title.value, author.value, pages.value, read.value);
+    return book;
   }
 
   const addBookToLibrary = (inputArr) => {
